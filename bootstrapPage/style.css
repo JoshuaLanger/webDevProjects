@@ -1,0 +1,9 @@
+body {
+	background-image: url("bike.jpg");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+}
+h1, .btn {
+	margin: 0 auto;
+}
