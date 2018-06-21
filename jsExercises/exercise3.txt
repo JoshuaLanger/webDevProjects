@@ -4,6 +4,8 @@
 // 2. Stores that first number
 // 3. Prompts the user for the second number.
 // 4. stores that number and responds with the SUM by using an alert.  
-
+var num1 = prompt("Enter the first number");
+var num2 = prompt("Enter the second number");
+alert(`The sum is ${Number(num1) + Number(num2)}.`);
 
 // BONUS: Make a program that can subtract, multiply, and also divide!
