@@ -11,3 +11,9 @@
 
 // IF they say they are over 18, respond with:
 // "Powering On. Enjoy the ride!"
+
+var age = Number(prompt("Enter your age: "));
+if (age < 18) alert("don't drink and drive");
+else if (age === 18) alert("still don't drink and drive");
+else if (age > 18) alert("seriously. don't.");
+else alert(`didn't recognize that.`);

@@ -9,3 +9,28 @@ var num2 = prompt("Enter the second number");
 alert(`The sum is ${Number(num1) + Number(num2)}.`);
 
 // BONUS: Make a program that can subtract, multiply, and also divide!
+
+var str = prompt("Enter your simple operation");
+var re = /\+|-|\*|\//;
+var op = str.match(re)[0];
+var nums = str.split(op);
+switch (op) {
+	case "+":
+		alert(`The sum is ${Number(nums[0])+Number(nums[1])}.`);
+		break;
+	case "-":
+		alert(`The difference is ${Number(nums[0])-Number(nums[1])}.`);
+		break;
+	case "*":
+		alert(`The product is ${Number(nums[0])*Number(nums[1])}.`);
+		break;
+	case "/":
+		if (Number(nums[1])===0) {
+			alert(`Can't divide by 0.`);
+			break;
+		}
+		alert(`The quotient is ${Number(nums[0])/Number(nums[1])}.`);
+		break;
+	default:
+		alert(`I don't understand ${str}, try again.`);
+}
