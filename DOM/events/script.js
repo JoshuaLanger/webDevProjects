@@ -11,6 +11,10 @@ function createListElement() {
 	var li = document.createElement("li");
 	li.appendChild(document.createTextNode(input.value));
 	ul.appendChild(li);
+	var btn = document.createElement("button");
+	li.appendChild(btn);
+	var btnX = document.createTextNode("X");
+	btn.appendChild(btnX);
 	input.value = "";
 }
 
@@ -26,12 +30,12 @@ function addListAfterKeypress(event) {
 	}
 }
 
+function crossListElement(event) {
+	event.target.classList.toggle("done");
+}
+
 button.addEventListener("click", addListAfterClick);
 
 input.addEventListener("keypress", addListAfterKeypress);
 
-for (var i=0; i < li.length; i++) {
-	li.addEventListener("click", function() {
-		li.classList.toggle("done");
-	});
-}
+ul.addEventListener("click", crossListElement);
