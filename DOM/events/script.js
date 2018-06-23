@@ -1,7 +1,6 @@
 var button = document.getElementById("enter");
 var input = document.getElementById("userinput");
 var ul = document.querySelector("ul");
-var li = ul.children;
 
 function inputLength() {
 	return input.value.length;
@@ -9,12 +8,12 @@ function inputLength() {
 
 function createListElement() {
 	var li = document.createElement("li");
-	li.appendChild(document.createTextNode(input.value));
-	ul.appendChild(li);
 	var btn = document.createElement("button");
 	li.appendChild(btn);
 	var btnX = document.createTextNode("X");
 	btn.appendChild(btnX);
+	li.appendChild(document.createTextNode(" " + input.value));
+	ul.appendChild(li);
 	input.value = "";
 }
 
@@ -34,8 +33,15 @@ function crossListElement(event) {
 	event.target.classList.toggle("done");
 }
 
+function deleteListElement(event) {
+	if (event.target.tagName === "BUTTON") {
+		ul.removeChild(event.target.parentNode);
+	}
+}
+
 button.addEventListener("click", addListAfterClick);
 
 input.addEventListener("keypress", addListAfterKeypress);
 
 ul.addEventListener("click", crossListElement);
+ul.addEventListener("click", deleteListElement);
