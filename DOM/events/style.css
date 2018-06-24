@@ -1,5 +1,7 @@
-.coolTitle {
+body {
   text-align: center;
+}
+.coolTitle {
   font-family: 'Oswald', Helvetica, sans-serif;
   font-size: 40px;
   transform: skewY(-10deg);
@@ -17,7 +19,9 @@
     -8px -8px 0 firebrick,
     -30px 20px 40px dimgrey;
 }
-
+li {
+  list-style: none;
+}
 .done {
   text-decoration: line-through;
 }

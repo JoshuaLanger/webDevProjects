@@ -17,6 +17,20 @@ if (Number(age) < 18) {
 
 //2. Create another function that does the same thing, called checkDriverAge2() using Function Expression.
 
+var age = prompt("Your age, what is?");
+
+alert(checkDriverAge(Number(age)));
+
+function checkDriverAge(x) {
+	if (x < 18) {
+		return "Sorry, you are too young to drive this car. Powering off";
+	} else if (x > 18) {
+		return "Powering On. Enjoy the ride!";
+	} else if (x === 18) {
+		return "Congratulations on your first year of driving. Enjoy the ride!";
+	}
+}
+
 //BONUS: Instead of using the prompt. Now, only use the return keyword and make the checkDriverAge() function accept an argument of age, so that if you enter:
 checkDriverAge(92);
 it returns "Powering On. Enjoy the ride!"
