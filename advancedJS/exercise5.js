@@ -33,7 +33,7 @@ array.forEach(obj => {
   let {username} = obj;
   eachArray.push(username += '!');
 });
-return eachArray;
+console.log(eachArray);
 
 //Create an array using map that has all the usernames with a "? to each of the usernames
 const mapArray = array.forEach(obj => {
