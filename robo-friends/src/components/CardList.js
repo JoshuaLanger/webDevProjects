@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from './Card';
-import './Card.css';
+import Card from '../components/Card';
+import '../components/Card.css';
 
 const CardList = ({robots}) => {
 	const cardArray = robots.map((user, i) => {
