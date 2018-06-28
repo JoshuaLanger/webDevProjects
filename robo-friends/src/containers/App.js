@@ -41,10 +41,10 @@ class App extends Component {
 				</div>
 			);
 	}
-	componentDidMount() {
-		fetch('https://jsonplaceholder.typicode.com/users')
-			.then(response => response.json())
-			.then(users => {this.setState({'robots': users})})
+	async componentDidMount() {
+		const users = await fetch('https://jsonplaceholder.typicode.com/users');
+		const resp = await users.json();
+		this.setState({'robots': resp});
 	}
 }
 
