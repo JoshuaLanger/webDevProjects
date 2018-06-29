@@ -5,9 +5,15 @@ import './Logo.css';
 
 const Logo = () => {
 	return (
-		<Tilt className="Tilt" options={{ max : 55 }} >
+		<Tilt 
+			className="Tilt" 
+			options={{ max : 55 }}>
 			<div className="Tilt-inner">
-				<img src={brain} alt='brain' />
+				<img 
+					className='logoImg'
+					src={brain} 
+					alt='brain' 
+				/>
 			</div>
 		</Tilt>
 	)
