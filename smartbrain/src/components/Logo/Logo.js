@@ -1,15 +1,16 @@
-import React, {Component} from 'react';
-import Tilt from 'react-tilt'
+import React from 'react';
+import Tilt from 'react-tilt';
+import brain from './brain.png';
 import './Logo.css';
 
-class Logo extends Component {
-	render() {
-		return (
-			<Tilt className="Tilt" options={{ max : 25 }} style={{ height: 250, width: 250 }} >
-				<div className="Tilt-inner"> 👽 </div>
-			</Tilt>
-		)
-	}
+const Logo = () => {
+	return (
+		<Tilt className="Tilt" options={{ max : 55 }} >
+			<div className="Tilt-inner">
+				<img src={brain} alt='brain' />
+			</div>
+		</Tilt>
+	)
 }
 
 export default Logo;
