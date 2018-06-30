@@ -14,8 +14,8 @@ const FaceRecImg = ({myImgUrl, myBox}) => {
 			<div 
 				className='boundingBox'
 				style={{
-					top: myBox.topRow,
-					left: myBox.leftCol,
+					top: myBox.top,
+					left: myBox.left,
 					width: myBox.width,
 					height: myBox.height,
 				}}
