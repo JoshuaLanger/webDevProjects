@@ -12,3 +12,8 @@ body {
 	left: 0;
 	z-index: -1;
 }
+.center {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+}

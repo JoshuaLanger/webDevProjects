@@ -1,5 +1,5 @@
 .Tilt {
-	position: fixed;
+	position: absolute;
 	left: 80px;
 	top: 50px;
 	border: 2px solid rgb(255,0,255);

@@ -35,26 +35,37 @@ class App extends Component {
     this.state = {
       input: '',
       imgUrl: '',
+      box: {}
     }
+  }
+  calcFaceLoc = (data) => {
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    console.log('clarifaiFace', clarifaiFace);
+    const img = document.getElementById('faceImg');
+    const width = Number(img.width);
+    const height = Number(img.height);
+    console.log('width', width, 'height', height);
+    return {
+      topRow: clarifaiFace.top_row * height,
+      leftCol: clarifaiFace.left_col * width,
+      width: width * (clarifaiFace.right_col - clarifaiFace.left_col),
+      height: height * (clarifaiFace.bottom_row - clarifaiFace.top_row),
+    }
+  }
+  displayFaceBox = (box) => {
+    this.setState({box: box});
+    console.log('box parameters', box);
   }
   onInputChange = (event) => {
     console.log(event.target.value);
     this.setState({input: event.target.value})
   }
   onSubmit = () => {
-    console.log('click');
     this.setState({imgUrl: this.state.input});
     clarifaiApp.models
-      .predict(Clarifai.FACE_DETECT_MODEL, 
-        this.state.input)
-      .then(
-        function(response) {
-          console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
-        },
-        function(err) {
-          console.log('Oh no, brainfreeze!', err);
-        }
-      );
+      .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+      .then(response => this.displayFaceBox(this.calcFaceLoc(response)))
+      .catch(err => console.log('Oh no, brainfreeze!', err));
   }
   render() {
     return (
@@ -71,6 +82,7 @@ class App extends Component {
           mySubmit={this.onSubmit}
         />
         <FaceRecImg 
+          myBox={this.state.box}
           myImgUrl={this.state.imgUrl}
         />
       </div>

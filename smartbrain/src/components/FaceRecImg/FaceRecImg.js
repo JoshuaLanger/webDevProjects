@@ -1,16 +1,25 @@
 import React from 'react';
 import './FaceRecImg.css';
 
-const FaceRecImg = ({myImgUrl}) => {
+const FaceRecImg = ({myImgUrl, myBox}) => {
 	return (
-		<div>
+		<div className='faceImg'>
 			<img
-				className='faceImg'
+				id="faceImg"
 				src={myImgUrl} 
 				alt="" 
 				width='500px'
 				height='auto'
 			/>
+			<div 
+				className='boundingBox'
+				style={{
+					top: myBox.topRow,
+					left: myBox.leftCol,
+					width: myBox.width,
+					height: myBox.height,
+				}}
+			></div>
 		</div>
 	)
 }
