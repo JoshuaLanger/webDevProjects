@@ -1,14 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './Nav.css';
 
-class Nav extends Component {
-	render() {
-		return (
-			<div className="nav">
-				<a href="">Sign Out</a>
-			</div>
-		)
-	}
+const Nav = ({myRouteChange}) => {
+	return (
+		<div className="nav">
+			<a onClick={() => myRouteChange('signin')} href="">Sign Out</a>
+		</div>
+	)
 }
 
 export default Nav;

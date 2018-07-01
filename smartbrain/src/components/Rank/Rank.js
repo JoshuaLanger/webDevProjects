@@ -3,7 +3,7 @@ import './Rank.css';
 
 const Rank = () => {
 	return (
-		<div class='center'>
+		<div className='center'>
 			<h3>Josh, your rank is  <span className='rank'>#4</span></h3>
 		</div>
 	)
