@@ -3,7 +3,7 @@ import React from 'react';
 const Register = ({myRouteChange}) => {
 	return (
 		<div className="center">
-			<form>
+			<div>
 				<label htmlFor='name'>Name: </label>
 					<input type="text" name="name"/><br />
 				<label htmlFor='user'>Username: </label>
@@ -13,12 +13,9 @@ const Register = ({myRouteChange}) => {
 				<button 
 					type="submit" 
 					onClick={() => myRouteChange('home')}>
-						Sign In
-				</button>
-				<p onClick={() => myRouteChange('register')}>
 						Register
-				</p>
-			</form>
+				</button>
+			</div>
 		</div>
 	)
 }

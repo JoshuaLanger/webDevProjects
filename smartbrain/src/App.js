@@ -35,13 +35,17 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      route: 'register',
+      isSignedIn: false,
+      route: 'signin',
       input: '',
       imgUrl: '',
       box: {},
     }
   }
   onRouteChange = (route) => {
+    (route === 'signout')
+    ? this.setState({isSignedIn: false})
+    : this.setState({isSignedIn: true});
     this.setState({route: route});
   }
   calcFaceLoc = (data) => {
@@ -95,16 +99,19 @@ class App extends Component {
           className='particles'
           params={particleOptions}
         />
-        <Nav />
+        <Nav 
+          myRouteChange={this.onRouteChange}
+          isSignedIn={this.isSignedIn}
+        />
         <Logo />
         { this.state.route === 'home'
           ? this.renderHome()
           : ( this.state.route === 'signin'
               ? <SignIn 
-                  myRouteChange={this.onRouteChange('home')}
+                  myRouteChange={this.onRouteChange}
                 />
               : <Register
-                  myRouteChange={this.onRouteChange('home')}
+                  myRouteChange={this.onRouteChange}
                 />   
             )
         }      

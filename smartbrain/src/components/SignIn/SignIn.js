@@ -13,6 +13,7 @@ const SignIn = ({myRouteChange}) => {
 					onClick={() => myRouteChange('home')}>
 						Sign In
 				</button>
+				<p onClick={() => myRouteChange('register')}>Register</p>
 			</form>
 		</div>
 	)
