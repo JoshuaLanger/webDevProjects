@@ -6,20 +6,18 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-/*ROUTES*/
+/* ROUTES */
 app.get('/', (req, res) => {
-	console.log('req query', req.query);
-	console.log('req header', req.header);
 	res.send('I am root');
 });
 app.get('/api', (req, res) => {
 	const data = {
-		'name': 'Data',
-		'captain': 'Picard'
+		'one': 1,
+		'two': 2
 	}
 	res.send(data);
-});
-app.post('/api', (req, res) => {
+})
+app.post('/', (req, res) => {
 	console.log(req.body);
 	res.send('Success!');
 });
