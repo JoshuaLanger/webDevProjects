@@ -8,6 +8,7 @@ app.use(bodyParser.json());
 
 /* ROUTES */
 app.get('/', (req, res) => {
+	console.log(req.headers);
 	res.send('I am root');
 });
 app.get('/api', (req, res) => {
@@ -16,10 +17,10 @@ app.get('/api', (req, res) => {
 		'two': 2
 	}
 	res.send(data);
-})
+});
 app.post('/', (req, res) => {
 	console.log(req.body);
-	res.send('Success!');
 });
+
 
 app.listen(3000);
