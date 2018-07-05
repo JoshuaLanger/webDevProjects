@@ -40,7 +40,24 @@ class App extends Component {
       input: '',
       imgUrl: '',
       box: {},
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
+      }
     }
+  }
+  loadUser = data => {
+    this.setState({user: {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      entries: data.entries,
+      joined: data.joined
+    }
+  });
   }
   onRouteChange = (route) => {
     (route === 'signout')
@@ -74,13 +91,31 @@ class App extends Component {
     this.setState({imgUrl: this.state.input});
     clarifaiApp.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then(response => this.displayFaceBox(this.calcFaceLoc(response)))
+      .then(response => {
+        if (response) {
+          fetch('http://localhost:3000/image', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, {entries: count}));
+          })
+        }
+        this.displayFaceBox(this.calcFaceLoc(response));
+      })
       .catch(err => console.log('Oh no, brainfreeze!', err));
   }
   renderHome = () => {
     return (
       <div>
-        <Rank />
+        <Rank 
+          name={this.state.user.name}
+          entries={this.state.user.entries}
+        />
         <ImgLinkForm 
           myInputChange={this.onInputChange}
           mySubmit={this.onSubmit}
@@ -108,9 +143,11 @@ class App extends Component {
           ? this.renderHome()
           : ( this.state.route === 'signin'
               ? <SignIn 
+                  loadUser={this.loadUser}
                   myRouteChange={this.onRouteChange}
                 />
               : <Register
+                  loadUser={this.loadUser}
                   myRouteChange={this.onRouteChange}
                 />   
             )
