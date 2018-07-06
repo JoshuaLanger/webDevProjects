@@ -23,11 +23,11 @@ class SignIn extends React.Component {
 				pswd: this.state.signInPswd
 			})
 		})
-			.then(response => response.json())
-			.then(user => {
-				if (user.id) {
-					this.props.loadUser(user);
-					this.props.myRouteChange('home');
+		.then(response => response.json())
+		.then(user => {
+			if (user.id) {
+				this.props.loadUser(user);
+				this.props.myRouteChange('home');
 			}
 		});
 	}
