@@ -11,6 +11,10 @@ const db = require('knex')({
 		database: 'smartbrain-db'
 	}
 });
+const register = require('./controllers/register.js');
+const signin = require('./controllers/signin.js');
+const profile = require('./controllers/profile.js');
+const image = require('./controllers/image.js');
 
 const app = express();
 
@@ -20,85 +24,14 @@ app.use(cors());
 
 /* ROUTES */
 app.get('/', (req, res) => {
-	res.json('I am root');
+	res.send('I am root');
 });
-app.post('/signin', (req, res) => {
-	db.select('email', 'hash').from('login')
-	.where('email', '=', req.body.email)
-	.then(data => {
-		const isValid = bcrypt.compareSync(req.body.password, data[0].hash);
-		if (isValid) {
-			return db.select('*').from('users')
-			.where('email', '=', req.body.email)
-			.then(user => {
-				res.json(user[0]);
-			})
-			.catch(err => res.status(400).json('unable to get user'));
-		} else {
-			res.status(400).json('wrong credentials');
-		}
-	})
-	.catch(err => res.status(400).json('wrong credentials'));
-});
-app.post('/register', (req, res) => {
-	const {email, name, password} = req.body;
-	var hash = bcrypt.hashSync(password);
-	// Begin transaction to update login, then users in one go
-	// If one fails, they all fail
-	db.transaction(trx => {
-		trx.insert({
-			hash: hash,
-			email: email
-		})
-		.into('login')
-		.returning('email')
-		.then(loginEmail => {
-			return trx('users')
-			.returning('*')
-			.insert({
-				email: loginEmail[0],
-				name: name,
-				joined: new Date()
-			})
-				.then(user => {
-				res.json(user[0]);
-			})
-				.catch(err => {
-				res.status(400).json('unable to register');
-			});
-		})
-		.then(trx.commit) // If all goes well, update all tables
-		.catch(trx.rollback); // Otherwise, return to last state
-	});
-});
-app.get('/profile/:id', (req, res) => {
-	const {id} = req.params;
-	db.select('*').from('users').where({id})
-		.then(user => {
-		if (user.length) {
-			res.json(user[0]);
-		} else {
-			res.status(400).json('Not found')
-		}
-	})
-		.catch(err => {
-		res.status(400).json('can\'t find user');
-	});
-});
-app.put('/image', (req, res) => {
-	const {id} = req.body;
-	db('users')
-		.where('id', '=', id)
-		.increment('entries', 1)
-		.returning('entries')
-		.then(entries => {
-			res.json(entries[0]);
-		})
-		.catch(err => {
-			res.status(400).json('Unable to get entries');
-		});
-});
+app.post('/signin', signin.handleSignIn(db, bcrypt));
+app.post('/register', register.handleRegister(db, bcrypt));
+app.get('/profile/:id', profile.handleProfileGet(db));
+app.put('/image', image.handleImagePut(db));
+app.post('/imageurl', (req, res) => image.handleApiCall(req, res));
 
 app.listen(3000, () => {
-	console.log('app is running on port 3000');
+	console.log(`Listening on port 3000`);
 });
