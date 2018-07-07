@@ -7,12 +7,8 @@ import Logo from './components/Logo/Logo.js';
 import Rank from './components/Rank/Rank.js';
 import ImgLinkForm from './components/ImgLinkForm/ImgLinkForm.js';
 import FaceRecImg from './components/FaceRecImg/FaceRecImg.js';
-import Clarifai from 'clarifai';
 import './App.css';
 
-const clarifaiApp = new Clarifai.App({
-  apiKey: 'cd9b15c6541846ed8ef8d3cd276ace10'
-});
 const particleOptions = {
   particles: {
     number: {
@@ -31,23 +27,24 @@ const particleOptions = {
     }
   }
 }
+const initState = {
+  isSignedIn: false,
+  route: 'signin',
+  input: '',
+  imgUrl: '',
+  box: {},
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+  }
+}
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      isSignedIn: false,
-      route: 'signin',
-      input: '',
-      imgUrl: '',
-      box: {},
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: 0,
-        joined: ''
-      }
-    }
+    this.state = initState;
   }
   loadUser = data => {
     this.setState({user: {
@@ -60,9 +57,11 @@ class App extends Component {
   });
   }
   onRouteChange = (route) => {
-    (route === 'signout')
-    ? this.setState({isSignedIn: false})
-    : this.setState({isSignedIn: true});
+    if (route === 'signout') {
+      this.setState(initState);
+    } else if (route === 'home') {
+      this.setState({isSignedIn: true})
+    }
     this.setState({route: route});
   }
   calcFaceLoc = (data) => {
@@ -87,27 +86,34 @@ class App extends Component {
     console.log(event.target.value);
     this.setState({input: event.target.value})
   }
-  onSubmit = () => {
+  onBtnSubmit = () => {
     this.setState({imgUrl: this.state.input});
-    clarifaiApp.models
-      .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then(response => {
-        if (response) {
-          fetch('http://localhost:3000/image', {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              id: this.state.user.id
-            })
-          })
-            .then(response => response.json())
-            .then(count => {
-              this.setState(Object.assign(this.state.user, {entries: count}));
-          })
-        }
-        this.displayFaceBox(this.calcFaceLoc(response));
+    fetch('http://localhost:3000/imageurl', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+          input: this.state.input
       })
-      .catch(err => console.log('Oh no, brainfreeze!', err));
+    })
+    .then(response => response.json())
+    .then(response => {
+      if (response) {
+        fetch('http://localhost:3000/image', {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: this.state.user.id
+          })
+        })
+          .then(response => response.json())
+          .then(count => {
+            this.setState(Object.assign(this.state.user, {entries: count}));
+        })
+          .catch(console.log);
+      }
+      this.displayFaceBox(this.calcFaceLoc(response));
+    })
+    .catch(err => console.log('Oh no, brainfreeze!', err));
   }
   renderHome = () => {
     return (
@@ -118,7 +124,7 @@ class App extends Component {
         />
         <ImgLinkForm 
           myInputChange={this.onInputChange}
-          mySubmit={this.onSubmit}
+          mySubmit={this.onBtnSubmit}
         />
         <FaceRecImg 
           myBox={this.state.box}

@@ -4,23 +4,23 @@ class SignIn extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			signInEmail: '',
-			signInPswd: ''
+			email: '',
+			pswd: ''
 		}
 	}
 	onEmailChange = (event) => {
-		this.setState({signInEmail: event.target.value})
+		this.setState({email: event.target.value})
 	}
 	onPswdChange = (event) => {
-		this.setState({signInPswd: event.target.value})
+		this.setState({pswd: event.target.value})
 	}
 	onSubmitSignIn = () => {
 		fetch('http://localhost:3000/signin', {
 			method: "POST",
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
-				email: this.state.signInEmail,
-				pswd: this.state.signInPswd
+				email: this.state.email,
+				pswd: this.state.pswd
 			})
 		})
 		.then(response => response.json())
