@@ -1,5 +1,7 @@
 # Project dependencies
 .cache
+.jshintrc
+.eslintrc.json
 node_modules
 yarn-error.log
 

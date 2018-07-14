@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'gatsby-link'
-import Form from './src/components/form.js'
+import Form from '../components/form'
 
 const ThirdPage = () => (
   <div>
