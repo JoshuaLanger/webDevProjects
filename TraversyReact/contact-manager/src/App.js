@@ -1,20 +1,21 @@
 import React, { Component } from "react";
-import Contact from "./components/Contact";
+
 import Header from "./components/Header";
+import Contact from "./components/Contact";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div>
         <Header branding="Contact Manager" />
         <Contact
           name="BillyBob Jean"
-          phone="123-123-1234"
+          phone="764-234-9875"
           address="1600 pinness ave"
         />
         <Contact
-          name="Karen Doe"
-          phone="456-465-7456"
+          name="Karen Billy"
+          phone="654-234-1234"
           address="1601 pinness ave"
         />
       </div>
